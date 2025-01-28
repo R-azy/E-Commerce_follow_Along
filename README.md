@@ -26,4 +26,16 @@ We'll learn how to design and organize data using MongoDB. A schema helps us def
 ## milestone 2:
 
 + created a login page in frontend
-  
+
+## Milestone 3:
+
+- Set up dedicated folders for organizing backend code effectively.
+- Initialized and configured a Node.js server to handle API requests.
+- Connected the application to MongoDB to store and manage data.
+- Implemented basic error handling to ensure smooth server operation.
+
+## Milestone 4:
+
+- Created a User Model to define how user data is structured in the database.
+- Developed a User Controller to manage user interactions, like adding or retrieving data.
+- Configured Multer to handle file uploads, allowing users to store files such as images.
