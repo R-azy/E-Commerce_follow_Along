@@ -1,21 +1,19 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginPage } from './Routes.js';
-import { SignUpPage } from './Routes.js';
+// import SignupPage from "./Pages/SignupPage.jsx";
+import { LoginPage,SignupPage,Home,CreateProduct } from './Routes.js';
 import "./App.css";
-
-import Home from './pages/Home'; 
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/signup" element={<SignUpPage />} />
+      <Routes> 
+        <Route path='/' element={<Home />} />
         <Route path='/login' element={<LoginPage />} />
+        <Route path='/signup' element={<SignupPage />} />
+        <Route path='/create-product' element={<CreateProduct />} />
       </Routes>
     </BrowserRouter>
-    // <h1 className='bg-black font-bold text-8xl text-white'> tailwindcss</h1>
   );
 };
 
