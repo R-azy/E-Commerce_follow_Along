@@ -10,13 +10,9 @@ const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 
-
-
 router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, res, next) => {
     console.log("Creating user...");
     const { name, email, password } = req.body;
-
-
 
     const userEmail = await User.findOne({ email });
     if (userEmail) {
@@ -31,7 +27,6 @@ router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, 
         }
         return next(new ErrorHandler("User already exists", 400));
     }
-
 
     let fileUrl = "";
     if (req.file) {
@@ -51,7 +46,6 @@ router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, 
     console.log(user)
     res.status(201).json({ success: true, user });
 }));
-
 
 router.post("/login", catchAsyncErrors(async (req, res, next) => {
     console.log("Logging in user...");
@@ -74,6 +68,5 @@ router.post("/login", catchAsyncErrors(async (req, res, next) => {
         user,
     });
 }));
-
 
 module.exports = router;

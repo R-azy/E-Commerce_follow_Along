@@ -62,3 +62,28 @@ In this milestone, we created a reusable product card component and designed a h
 
 ## Milestone 9 :
 In this milestone, we created a product page for the e-commerce website. The page displays a list of products with their details, including images, names, descriptions, and prices. Users can click on a product to view more information or add it to their cart. This page provides a user-friendly interface for browsing and selecting products.
+
+# Milestone 10 Summary
+
+In this milestone, you'll learn how to create a *mongoose schema* for products and build an *endpoint* to store product details in MongoDB. The main steps include:
+
+## 1. Product Schema
+- Define the structure for product data (e.g., name, description, price) with validation for required fields and correct data types.
+
+## 2. Endpoint Creation
+- Build a POST endpoint to receive product data, validate it, and save it to MongoDB.
+
+## 3. Validation
+- Ensure only valid data is saved, which helps maintain data integrity and prevent errors.
+
+## Milestone 11 :
+In this milestone, we created a My Products page that displays a list of products created by the user. The page fetches products from the database based on the user's email and displays them in a grid layout. This allows users to view and manage their products efficiently.
+
+ ## Milestone 12 :
+we created a My Products page that displays a list of products created by the user. The page fetches products from the database based on the user's email and displays them in a grid layout. This allows users to view and manage their products efficiently.
+
+## Milestone 13:
+In this milestone, we implemented the Update Product functionality, allowing users to edit product details. The update form dynamically loads the product's existing data, and changes are submitted via an API call. This ensures that users can modify product information easily while maintaining data integrity.
+
+## Milestone 14:
+This milestone focused on integrating the Delete Product functionality, allowing users to remove products permanently. A confirmation prompt ensures accidental deletions are avoided
