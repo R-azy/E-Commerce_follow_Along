@@ -1,48 +1,62 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'please provide the product name'],
-    },
-    price: {
-        type: Number,
-        required: [true, 'please provide the product price'],
+        required: [true, "Please provide the product name"],
     },
     description: {
         type: String,
-        required: [true, 'please provide the product description'],
+        required: [true, "Please provide the product description"],
     },
     category: {
         type: String,
-        required: [true, 'Product category is required'],
+        required: [true, "Please provide the product category"],
     },
     tags: {
-        type: String,
+        type: [String],
         default: [],
+    },
+    price: {
+        type: Number,
+        required: [true, "Please provide the product price"],
     },
     stock: {
         type: Number,
-        required: [true, 'Product stock is required'],
+        required: [true, "Please provide the product stock"],
     },
     email: {
         type: String,
-        required: [true, 'Product email is required'],
-        match : [/.+@.+\..+/,"please enter a valid email address"]
+        required: [true, "Please provide an email"],
+        match: [/.+@.+\..+/, "Please provide a valid email address"],
+    },
+    images: {
+        type: [String],
+        required: [true, "Please upload product images"],
     },
     createdAt: {
         type: Date,
         default: Date.now,
     },
-    images: {
-        type: [String],
-        default: [],
-        required: [true, 'Product images are required'],
-    },
+    cart : [
+        {
+            productid:{
+                type:String,
+                required:[true,"Please provide the product Id"],
+                unique:true,
+            },
+            quantity:{
+                type:Number,
+                required:[true,"Please provide the product quantity"],
+                min:[0,"Quantity cannot be negative"],
+            },
+            },
+        
+    ],
+
 },
 {
     timestamps: true,
-}
-);
+});
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model("Product", productSchema);

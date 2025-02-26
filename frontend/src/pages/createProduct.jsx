@@ -3,6 +3,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Nav from "../components/navbar";
+
 const CreateProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ const CreateProduct = () => {
         );
         if (response.status === 200) {
           alert("Product updated successfully!");
-          navigate("/myproducts");
+          navigate("/my-products");
         }
       } else {
         const response = await axios.post(
@@ -225,7 +226,7 @@ const CreateProduct = () => {
               className="hidden"
               multiple
               onChange={handleImagesChange}
-              required={!isEdit} //when creating a product this field is required
+              required={!isEdit}
             />
             <label htmlFor="upload" className="cursor-pointer">
               <AiOutlinePlusCircle size={30} color="#555" />
