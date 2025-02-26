@@ -104,11 +104,6 @@ const CreateProduct = () => {
           setPrice("");
           setStock("");
           setEmail("");
-
-
-
-
-
         }
       }
     } catch (err) {
