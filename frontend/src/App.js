@@ -5,23 +5,24 @@ import SignUpPage from './pages/SignUpPage';
 import "./App.css";
 import Home from './pages/Home'; 
 import CreateProduct from './pages/createProduct.jsx';
-import MyProduct from './pages/myProducts';
-// import MyProducts from './pages/myProducts';
+// import MyProduct from './pages/myProducts';
+import Cart from './pages/cart';
+import MyProducts from './pages/myProducts';
 const App = () => {
   return (
     <BrowserRouter>
    
-      <Routes>
+   <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
       <Route path="/create-product/:id" element={<CreateProduct />} />
       <Route path="/create-product" element={<CreateProduct />} />
-
-      <Route path='/myproducts' element={<MyProduct />} />
+    <Route path='/cart' element={<Cart />} />
+      <Route path='/my-products' element={<MyProducts />} />
       </Routes>
     </BrowserRouter>
   );
-};
+}
 
 export default App;

@@ -3,10 +3,12 @@ import  SignupPage  from "./pages/SignUpPage.jsx";
 import Home from "./pages/Home";
 import CreateProduct from "./pages/createProduct.jsx";
 import MyProducts from "./pages/myProducts";
+import Cart from "./pages/cart";
 export {
     LoginPage,
     SignupPage,
     Home,
     CreateProduct,
-    MyProducts
+    MyProducts,
+    Cart
 }
