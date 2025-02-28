@@ -1,62 +1,63 @@
 const mongoose = require("mongoose");
 
-const productSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: [true, "Please provide the product name"],
+      type: String,
+      required: [true, "Please provide the product name"],
     },
     description: {
-        type: String,
-        required: [true, "Please provide the product description"],
+      type: String,
+      required: [true, "Please provide the product description"],
     },
     category: {
-        type: String,
-        required: [true, "Please provide the product category"],
+      type: String,
+      required: [true, "Please provide the product category"],
     },
     tags: {
-        type: [String],
-        default: [],
+      type: [String],
+      default: [],
     },
     price: {
-        type: Number,
-        required: [true, "Please provide the product price"],
+      type: Number,
+      required: [true, "Please provide the product price"],
     },
     stock: {
-        type: Number,
-        required: [true, "Please provide the product stock"],
+      type: Number,
+      required: [true, "Please provide the product stock"],
     },
     email: {
-        type: String,
-        required: [true, "Please provide an email"],
-        match: [/.+@.+\..+/, "Please provide a valid email address"],
+      type: String,
+      required: [true, "Please provide an email"],
+      match: [/.+@.+\..+/, "Please provide a valid email address"],
     },
     images: {
-        type: [String],
-        required: [true, "Please upload product images"],
+      type: [String],
+      required: [true, "Please upload product images"],
     },
     createdAt: {
-        type: Date,
-        default: Date.now,
+      type: Date,
+      default: Date.now,
     },
-    cart : [
-        {
-            productid:{
-                type:String,
-                required:[true,"Please provide the product Id"],
-                unique:true,
-            },
-            quantity:{
-                type:Number,
-                required:[true,"Please provide the product quantity"],
-                min:[0,"Quantity cannot be negative"],
-            },
-            },
-        
-    ],
 
-},
-{
+    cart: [
+      {
+        productid: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: [true, "Please provide the product ID"],
+        },
+        quantity: {
+          type: Number,
+          required: [true, "Please provide the quantity"],
+          min: [0, "Quantity cannot be negative"],
+        },
+      },
+    ],
+  },
+  {
     timestamps: true,
-});
+  }
+);
 
 module.exports = mongoose.model("Product", productSchema);
