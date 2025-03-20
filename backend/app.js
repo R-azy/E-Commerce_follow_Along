@@ -24,9 +24,11 @@ app.use('/products', express.static(path.join(__dirname, 'products')));
 
 const user = require("./controller/user");
 const product = require('./controller/product');
+const order = require('./controller/orders');
 
 app.use("/api/v2/user", user);
 app.use("/api/v2/product", product);
+app.use("/api/v2/orders", order);
 
 app.use(ErrorHandler);
 
