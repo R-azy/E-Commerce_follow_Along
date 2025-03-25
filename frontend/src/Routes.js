@@ -6,6 +6,7 @@ import MyProducts from "./pages/myProducts";
 import Cart from "./pages/cart";
 import Profile from "./pages/profile";
 import CreateAddress from "./pages/createAddress";
+import MyOrdersPage from './pages/myorders';
 export {
   LoginPage,
   SignupPage,
@@ -15,4 +16,5 @@ export {
   Cart,
   Profile,
   CreateAddress,
+  MyOrdersPage
 };

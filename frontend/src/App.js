@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage"; // Import directly
+import LoginPage from "./pages/LoginPage"; 
 import SignUpPage from "./pages/SignUpPage";
 import "./App.css";
 import Home from "./pages/Home";
@@ -12,6 +12,7 @@ import Profile from "./pages/profile";
 import CreateAddress from "./pages/createAddress";
 import SelectAddress from "./pages/SelectAddress";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import MyOrderPage from "./pages/myorders";
 const App = () => {
   return (
     <BrowserRouter>
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/create-address" element={<CreateAddress />} />
         <Route path="/select-address" element={<SelectAddress />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
+        <Route path="/myorders" element={<MyOrderPage />} />
       </Routes>
     </BrowserRouter>
   );
