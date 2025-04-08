@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddressCard from "../components/AddressCard";
-import NavBar from "../components/navbar";
+import NavBar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 export default function Profile() {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../components/navbar";
+import Nav from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 const SelectAddress = () => {

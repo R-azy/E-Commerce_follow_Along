@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Nav from "../components/navbar";
+import Nav from "../components/Navbar";
 
 const CreateAddress = () => {
   const navigate = useNavigate();

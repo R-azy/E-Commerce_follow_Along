@@ -134,3 +134,17 @@ The Order Summary page will provide users with a clear overview of their purchas
 ## Milestone 25:
 This endpoint allows users to place orders by sending product details, user information, and address details. The system retrieves the user's _id using their email and processes each product as a separate order while maintaining the same address. Each order is stored in the MongoDB orders collection using the previously defined Order schema. This ensures that every product is tracked as an independent order while linking all orders to the same user and delivery address.  
 
+# Milestone 26:
+This endpoint allows retrieval of a user's order history using their email address. When a request is made, the server first searches for the user's _id based on the provided email. Once the _id is obtained, it queries the database to fetch all orders associated with that user. The response includes the complete list of orders, enabling seamless tracking of purchase history. This functionality ensures efficient data retrieval while maintaining a user-friendly experience.
+
+# Milestone 27:
+Milestone 27 focuses on implementing the My Orders page in the e-commerce project. This involves sending a GET request to the /my-orders endpoint, where the user's email is passed to retrieve all their orders from the database. The fetched orders will then be displayed dynamically on the My Orders page, ensuring users can easily view their purchase history. Additionally, a navigation link to this page will be added to the navbar for better accessibility. This update enhances the user experience by providing a dedicated section for order tracking and management.
+
+# Milestone 28:
+Milestone 28 enhances the **My Orders** page by adding a **Cancel Order** button for each active order. This button will allow users to cancel an order if it has not already been canceled. If an order is already marked as canceled, the button will not be displayed. To achieve this, a new **API endpoint** will be created to handle order cancellations. When a user clicks the cancel button, the order **ID** will be sent to this endpoint, which will retrieve the order, update its status to **canceled**, and save the changes. This feature improves order management and gives users more control over their purchases.# Ecommerce-Follow-Along
+
+## Milestone 29 - PayPal Integration Setup:
+In this milestone, we set up the PayPal sandbox environment for online payments. First, create a PayPal account and access the PayPal Developer Dashboard. From there, locate the sandbox accounts section, copy the UserID, and save it. Additionally, retrieve and save the client ID from the sandbox account. On the order confirmation page, implement two payment options: Cash on Delivery (COD) and online payment. Use radio buttons to toggle between these options, ensuring that the PayPal payment buttons appear when online payment is selected. In the next milestone, we will implement the functionality to display and process PayPal online payments.
+
+## Milestone 30 - Implementing PayPal Online Payments
+In this milestone, we integrate PayPal online payments into our project. Using the previously created PayPal sandbox account and client ID, implement the PayPal API to enable online transactions. Install the react-paypal-js NPM package, which provides the PayPalScriptProvider component to display various payment methods, including credit and debit cards. This step will enhance your understanding of integrating online payments seamlessly into your application.

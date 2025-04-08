@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Nav from "../components/navbar";
+import Nav from "../components/Navbar";
 
 const MyOrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -26,27 +26,31 @@ const MyOrdersPage = () => {
     }
   };
 
-const cancelOrder = async (orderId) => {
+  const cancelOrder = async (orderId) => {
     try {
-        const response = await axios.patch(`http://localhost:8000/api/v2/orders/cancel-order/${orderId}`);
-        console.log(response.data);  // Add this for debugging
+      const response = await axios.patch(
+        `http://localhost:8000/api/v2/orders/cancel-order/${orderId}`
+      );
+      console.log(response.data); // Add this for debugging
 
-        setOrders((prevOrders) =>
-            prevOrders.map((order) =>
-                order._id === orderId ? { ...order, status: response.data.order.orderStatus } : order
-            )
-        );
-        fetchOrders();
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === orderId
+            ? { ...order, status: response.data.order.orderStatus }
+            : order
+        )
+      );
+      fetchOrders();
     } catch (err) {
-        console.error('Error:', err.response?.status, err.message);
+      console.error("Error:", err.response?.status, err.message);
 
-        if (err.response?.status === 404) {
-            alert('Order not found (404).');
-        } else {
-            alert(err.message || 'Error cancelling order');
-        }
+      if (err.response?.status === 404) {
+        alert("Order not found (404).");
+      } else {
+        alert(err.message || "Error cancelling order");
+      }
     }
-};
+  };
 
   useEffect(() => {
     fetchOrders();
