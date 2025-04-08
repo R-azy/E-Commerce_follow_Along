@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 // import Product from "../components/Products/Product";
 import MyProduct from "../components/MyProducts/myproduct";
 import Navbar from "../components/Navbar";
+import { useSelector } from "react-redux";
 export default function MyProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const email = "razzrazy1798@gmail.com";
+  const email = useSelector((state) => state.user.email);
 
   console.log(email);
 

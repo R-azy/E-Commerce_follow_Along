@@ -2,7 +2,7 @@ import CartProduct from "../components/CartProduct";
 import Nav from "../components/Navbar";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 const Cart = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -11,7 +11,7 @@ const Cart = () => {
   };
   useEffect(() => {
     fetch(
-      `http://localhost:8000/api/v2/product/cartproducts?email=${"vickysololeveling1@gmail.com"}`
+      `http://localhost:8000/api/v2/product/cartproducts?email=${email}`
     )
       .then((res) => {
         if (!res.ok) {

@@ -1,6 +1,8 @@
+// SelectAddress.jsx
 import React, { useState, useEffect } from "react";
 import Nav from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SelectAddress = () => {
   const [addresses, setAddresses] = useState([]);
@@ -8,9 +10,10 @@ const SelectAddress = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const userEmail = "razzrazy1798@gmail.com";
+  const userEmail = useSelector((state) => state.user.email);
 
   useEffect(() => {
+    if (!userEmail) return;
     const fetchAddresses = async () => {
       try {
         const response = await fetch(
@@ -92,7 +95,7 @@ const SelectAddress = () => {
                   <div>
                     <p className="font-medium">
                       {address.address1}
-                      {address.address2 ? `, ${address.address2} ` : ""},{" "}
+                      {address.address2 ? `, ${address.address2}` : ""},{" "}
                       {address.city}, {address.state}, {address.zipCode}
                     </p>
                     <p className="text-sm text-gray-600">{address.country}</p>
