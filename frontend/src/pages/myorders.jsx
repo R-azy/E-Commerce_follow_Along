@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Nav from "../components/Navbar";
 import { useSelector } from "react-redux";
+import axios from "axios";
 const MyOrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const email = useSelector((state) => state.user.email);
@@ -13,7 +14,7 @@ const MyOrdersPage = () => {
       setLoading(true);
       setError("");
       const response = await axios.get(
-        "http://localhost:8000/api/v2/orders/my-orders",
+        "/api/v2/orders/my-orders",
         {
           params: { email: email },
         }
@@ -29,7 +30,7 @@ const MyOrdersPage = () => {
   const cancelOrder = async (orderId) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8000/api/v2/orders/cancel-order/${orderId}`
+        `/api/v2/orders/cancel-order/${orderId}`
       );
       console.log(response.data); // Add this for debugging
 

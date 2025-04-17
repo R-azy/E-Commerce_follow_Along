@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Navbar";
 import { useSelector } from "react-redux";
+import axios from "axios";
 const CreateAddress = () => {
   const navigate = useNavigate();
   const email = useSelector((state) => state.user.email);
@@ -26,8 +27,7 @@ const CreateAddress = () => {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/v2/user/add-address",
+      const response = await axios.post("/api/v2/user/address",
         addressData,
         {
           headers: { "Content-Type": "application/json" },

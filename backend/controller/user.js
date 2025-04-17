@@ -5,9 +5,16 @@ const User = require("../model/user");
 const router = express.Router();
 const { upload } = require("../multer");
 const ErrorHandler = require("../utils/ErrorHandler");
-const catchAsyncErrors = require("../middleware/catchAsynErrors");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
+// JWT_SECRET = "your_strong_secret_key" // we using this to seal the token so no one can able to change the datas in the token
+
+const uploadDir = path.join(__dirname, "../uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
 router.post(
   "/create-user",
@@ -32,10 +39,10 @@ router.post(
 
     let fileUrl = "";
     if (req.file) {
-      fileUrl = path.join("uploads", req.file.filename);
+      fileUrl = path.join("uploads", req.file.filename); // Construct file URL
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("At Create ", "Password: ", password, "Hash: ", hashedPassword);
     const user = await User.create({
       name,
       email,
@@ -45,7 +52,7 @@ router.post(
         url: fileUrl,
       },
     });
-    console.log(user);
+
     res.status(201).json({ success: true, user });
   })
 );
@@ -53,27 +60,51 @@ router.post(
 router.post(
   "/login",
   catchAsyncErrors(async (req, res, next) => {
-    console.log("Logging in user...");
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return next(new ErrorHandler("Please provide email and password", 400));
+    try {
+      console.log("Logging in user...");
+      const { email, password } = req.body;
+      console.log(email);
+      console.log(password);
+      if (!email || !password) {
+        return next(new ErrorHandler("Please provide email and password", 400));
+      }
+      const user = await User.findOne({ email }).select("+password");
+      if (!user) {
+        return next(new ErrorHandler("Invalid Email Password", 401));
+      }
+      const isPasswordMatched = bcrypt.compare(password, user.password);
+      console.log("At Auth", "Password: ", password, "Hash: ", user.password);
+      console.log(isPasswordMatched);
+      if (!isPasswordMatched) {
+        return next(new ErrorHandler("Invalid Password", 401));
+      }
+
+      // Generate JWT token
+      const token = jwt.sign(
+        { id: user._id, email: user.email },
+        process.env.JWT_SECRET || "your_jwt_secret",
+        { expiresIn: "1h" }
+      );
+
+      // Set token in an HttpOnly cookie
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // use true in production
+        sameSite: "Strict",
+        maxAge: 3600000, // 1 hour
+      });
+
+      user.password = undefined;
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      console.log("Error:", error);
     }
-    const user = await User.findOne({ email }).select("+password");
-    if (!user) {
-      return next(new ErrorHandler("Invalid Email or Password", 401));
-    }
-    const isPasswordMatched = await bcrypt.compare(password, user.password);
-    console.log("At Auth", "Password: ", password, "Hash: ", user.password);
-    if (!isPasswordMatched) {
-      return next(new ErrorHandler("Invalid Email or Password", 401));
-    }
-    user.password = undefined;
-    res.status(200).json({
-      success: true,
-      user,
-    });
   })
 );
+
 router.get(
   "/profile",
   catchAsyncErrors(async (req, res, next) => {
@@ -94,22 +125,9 @@ router.get(
         avatarUrl: user.avatar.url,
       },
       addresses: user.addresses,
-
-      // {
-      //     "success": true,
-      //     "user": {
-      //         "name": "a",
-      //         "email":"a@example.com",
-      //         "phoneNumber": "1234567890",
-      //         "avatarUrl": "https://example.com/avatar.jpg"
-      //     },
-      //     "addresses": ["Address 1", "Address 2"]
-      // }
     });
-    console.log(user.avatarUrl);
   })
 );
-
 router.post(
   "/add-address",
   catchAsyncErrors(async (req, res, next) => {
@@ -140,7 +158,6 @@ router.post(
     });
   })
 );
-
 router.get(
   "/addresses",
   catchAsyncErrors(async (req, res, next) => {
@@ -158,4 +175,5 @@ router.get(
     });
   })
 );
+
 module.exports = router;

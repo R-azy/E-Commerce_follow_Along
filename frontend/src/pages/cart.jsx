@@ -1,24 +1,27 @@
 import CartProduct from "../components/CartProduct";
-import Nav from "../components/Navbar";
+import NavBar from "../components/Navbar";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
 const Cart = () => {
-  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+  const email = useSelector((state) => state.user.email);
   const handlePlaceOrder = () => {
     navigate("/select-address");
   };
+
   useEffect(() => {
-    fetch(
-      `http://localhost:8000/api/v2/product/cartproducts?email=${email}`
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.json();
-      })
+    if (!email) return;
+    axios.get(`/api/v2/product/cartproducts?email=${email}`)
+    // fetch(`http://localhost:8000/api/v2/product/cartproducts?email=${email}`)
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       throw new Error(`HTTP error! status: ${res.status}`);
+    //     }
+    //     return res.json();
+    //   })
       .then((data) => {
         setProducts(
           data.cart.map((product) => ({
@@ -50,13 +53,13 @@ const Cart = () => {
       .catch((err) => {
         console.error(" Error fetching products:", err);
       });
-  }, []);
+  }, [email]);
 
   console.log("Products:", products);
 
   return (
     <div className="w-full h-screen">
-      <Nav />
+      <NavBar />
       <div className="w-full h-full justify-center items-center flex">
         <div className="w-full md:w-4/5 lg:w-4/6 2xl:w-2/3 h-full border-l border-r border-neutral-300 flex flex-col">
           <div className="w-full h-16  flex items-center justify-center">
@@ -69,8 +72,8 @@ const Cart = () => {
           </div>
           <div className="w-full p-4 flex justify-end">
             <button
-              onClick={handlePlaceOrder}
               className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600"
+              onClick={handlePlaceOrder}
             >
               Place Order
             </button>

@@ -1,8 +1,8 @@
-// SelectAddress.jsx
 import React, { useState, useEffect } from "react";
-import Nav from "../components/Navbar";
+import NavBar from "../components/auth/nav"; // Ensure the path is correct and component name matches
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import axios from "../axiosConfig";
+import { useSelector } from "react-redux"; // Import useSelector from react-redux
 
 const SelectAddress = () => {
   const [addresses, setAddresses] = useState([]);
@@ -14,41 +14,25 @@ const SelectAddress = () => {
 
   useEffect(() => {
     if (!userEmail) return;
-    const fetchAddresses = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/api/v2/user/addresses?email=${encodeURIComponent(
-            userEmail
-          )}`
-        );
 
-        if (!response.ok) {
-          if (response.status === 404) {
-            throw new Error("User not found.");
-          } else if (response.status === 400) {
-            throw new Error("Bad request. Email parameter is missing.");
-          } else {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-        }
-
-        const data = await response.json();
-
-        if (data && Array.isArray(data.addresses)) {
-          setAddresses(data.addresses);
+    axios
+      .get("/api/v2/user/addresses", { params: { email: userEmail } })
+      .then((res) => {
+        if (res.data && Array.isArray(res.data.addresses)) {
+          setAddresses(res.data.addresses);
         } else {
           setAddresses([]);
-          console.warn("Unexpected response structure:", data);
         }
-      } catch (err) {
+      })
+      .catch((err) => {
         console.error("Error fetching addresses:", err);
-        setError(err.message || "An unexpected error occurred.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAddresses();
+        setError(
+          err.response?.data?.message ||
+            err.message ||
+            "An unexpected error occurred."
+        );
+      })
+      .finally(() => setLoading(false));
   }, [userEmail]);
 
   const handleSelectAddress = (addressId) => {
@@ -79,7 +63,7 @@ const SelectAddress = () => {
 
   return (
     <div className="w-full min-h-screen flex flex-col">
-      <Nav />
+      <NavBar />
       <div className="flex-grow flex justify-center items-center p-4">
         <div className="w-full max-w-4xl border border-neutral-300 rounded-md flex flex-col p-6 bg-white shadow-md">
           <h2 className="text-2xl font-semibold mb-6 text-center">
@@ -94,9 +78,9 @@ const SelectAddress = () => {
                 >
                   <div>
                     <p className="font-medium">
-                      {address.address1}
-                      {address.address2 ? `, ${address.address2}` : ""},{" "}
-                      {address.city}, {address.state}, {address.zipCode}
+                      {`${address.address1}${
+                        address.address2 ? `, ${address.address2}` : ""
+                      }, ${address.city}, ${address.state}, ${address.zipCode}`}
                     </p>
                     <p className="text-sm text-gray-600">{address.country}</p>
                     <p className="text-sm text-gray-500">

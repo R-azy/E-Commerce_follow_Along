@@ -1,26 +1,17 @@
-import React, { useState } from "react";
+import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setemail } from "../../store/userActions";
-import { useNavigate, Link } from "react-router-dom";
-
+import { setemail } from "../../store/userAction";
+import { useNavigate } from "react-router-dom";
+axios.defaults.withCredentials = true;
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-/*************  ✨ Windsurf Command ⭐  *************/
-/**
- * Handles form submission for logging in.
- * Sends a POST request to the server with email and password.
- * If the response is successful, dispatches an action to store the email in the Redux state
- * and navigates to the root route.
- * If the response is an error, logs the error to the console.
- */
-/*******  54ae8259-3ae7-4e99-8eb6-b754e9535788  *******/  const [visible, setVisible] = useState(false);
-
+  const [visible, setVisible] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -29,7 +20,9 @@ const Login = () => {
         { email, password }
       );
       console.log(response.data);
+      // Dispatch action to store email in Redux state
       dispatch(setemail(email));
+      // Redirect to profile page after successful login
       navigate("/");
     } catch (error) {
       console.error("There was an error logging in!", error);
@@ -43,7 +36,6 @@ const Login = () => {
           Login to your account
         </h2>
       </div>
-
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
@@ -62,7 +54,9 @@ const Login = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border
+                   border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                    focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -82,7 +76,9 @@ const Login = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border
+                   border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                    focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
                 {visible ? (
                   <AiOutlineEye
@@ -99,9 +95,8 @@ const Login = () => {
                 )}
               </div>
             </div>
-
-            <div className={`${styles.normalFlex} justify-between`}>
-              <div className={`${styles.normalFlex}`}>
+            <div className={`${styles.noramlFlex} justify-between`}>
+              <div className={`${styles.noramlFlex}`}>
                 <input
                   type="checkbox"
                   name="remember-me"
@@ -116,15 +111,14 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-sm">
-                <Link
-                  to="/forgot-password"
+                <a
+                  href=".forgot-password"
                   className="font-medium text-blue-600 hover:text-blue-500"
                 >
                   Forgot your password?
-                </Link>
+                </a>
               </div>
             </div>
-
             <div>
               <button
                 type="submit"
@@ -133,12 +127,11 @@ const Login = () => {
                 Submit
               </button>
             </div>
-
-            <div className={`${styles.normalFlex} w-full`}>
+            <div className={`${styles.noramlFlex} w-full`}>
               <h4>Not have any account?</h4>
-              <Link to="/sign-up" className="text-blue-600 pl-2">
+              {/*<Link to="/sign-up" className="text-blue-600 pl-2">
                 Sign Up
-              </Link>
+              </Link> */}
             </div>
           </form>
         </div>

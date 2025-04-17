@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Nav from "../components/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import axios from "axios";
 // 1) Import PayPalScriptProvider & PayPalButtons
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
@@ -29,7 +29,7 @@ const OrderConfirmation = () => {
     const fetchData = async () => {
       try {
         const addressResponse = await axios.get(
-          "http://localhost:8000/api/v2/user/addresses",
+          "/api/v2/user/addresses",
           {
             params: { email: email },
           }
@@ -51,7 +51,7 @@ const OrderConfirmation = () => {
         setSelectedAddress(address);
 
         const cartResponse = await axios.get(
-          "http://localhost:8000/api/v2/product/cartproducts",
+          "/api/v2/product/cartproducts",
           {
             params: { email: email },
           }
@@ -190,7 +190,7 @@ const OrderConfirmation = () => {
 
       // Send POST request to place orders
       const response = await axios.post(
-        "http://localhost:8000/api/v2/orders/place-order",
+        "/api/v2/orders/place-order",
         payload
       );
       console.log("Orders placed successfully:", response.data);

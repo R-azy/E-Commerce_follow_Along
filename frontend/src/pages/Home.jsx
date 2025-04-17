@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Product from "../components/Products/Product";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v2/product/get-products")
+    fetch("/api/v2/product/get-products")
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);

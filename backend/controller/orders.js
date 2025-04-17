@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../model/order');         
 const User = require('../model/user');   
+const { isAuthenticatedUser } = require('../middleware/auth');
 
-router.post('/place-order', async (req, res) => {
+router.post('/place-order',isAuthenticatedUser, async (req, res) => {
     try {
         const { email, orderItems, shippingAddress } = req.body;
 
@@ -87,7 +88,7 @@ router.post('/place-order', async (req, res) => {
     }
 });
 
-router.get('/my-orders', async (req, res) => {
+router.get('/my-orders',isAuthenticatedUser, async (req, res) => {
     try {
         const { email } = req.query;
 
@@ -109,7 +110,7 @@ router.get('/my-orders', async (req, res) => {
     }
 });
 
-router.patch("/cancel-order/:orderId", async (req, res) => {
+router.patch("/cancel-order/:orderId",isAuthenticatedUser, async (req, res) => {
   try {
     const { orderId } = req.params;
     const order = await Order.findById(orderId);
